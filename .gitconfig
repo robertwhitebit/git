@@ -1,0 +1,197 @@
+[apply]
+	whitespace = fix
+
+[core]
+	editor = gedit -w -s
+	pager = less -x1,5
+	whitespace = trailing-space,space-before-tab,tabwidth=4
+
+[color]
+	ui = auto
+	branch = auto
+
+[color "diff"]
+	whitespace = green reverse
+
+[color "grep"]
+	filename = normal dim
+	linenumber = normal dim
+	separator = normal dim
+
+[color "status"]
+	untracked = yellow
+
+[commit]
+	template = ~/.git/templates/commit-msg
+
+[diff]
+	renames = copies
+	mnemonicprefix = true
+
+[filter "trimWhitespace"]
+	clean = git-stripspace
+
+[grep]
+	lineNumber = true
+	extendedRegexp = true
+
+[init]
+	templatedir = ~/.git/templates
+
+[log]
+	decorate = short
+	date = iso
+	abbrevCommit = true
+
+[merge]
+	conflictstyle = diff3
+	stat = true
+
+[pull]
+	rebase = true
+
+[push]
+	default = simple
+
+[rebase]
+	autosquash = true
+
+[rerere]
+	enabled = true
+
+[status]
+	short = true
+	branch = true
+
+[tag]
+	sort = version:refname
+
+[alias]
+# Short aliases
+	aa = add -A
+	am = !git amend
+	ama = !git amend-all
+	ama-no-edit = !git amend-all-no-edit
+	amn = !git amend-no-edit
+	aman = !git amend-all-no-edit
+	bl = blame
+	br = branch
+	c = commit
+	ca = commit -a
+	cam = commit -a -m
+	ci = commit
+	cm = commit -m
+	co = checkout
+	cob = checkout -b
+	cs = commit --squash=@
+	cf = commit --fixup=@
+	di = diff
+	diw = diff --color-words
+	mg = merge
+	mr = merge
+	ol = !git oneline
+	pl = pull
+	ps = push
+	re = reflog
+	rb = rebase
+	sa = stash apply
+	sc = !git cs
+	sf = !git cf
+	sl = stash list
+	sq = !git cs
+	ss = stash save
+	st = !"git -c color.status=always status --long | sed -r 's/Changes to be committed.*/Staged:/' | sed -r 's/Changes not staged.*/Unstaged:/' | sed -r 's/Untracked.*/Untracked:/' | egrep -v '^\\s+\\(use.*$' | egrep '^\\s+.*$|Staged:|Unstaged:|Untracked:|nothing to commit.*'"
+
+# Basics
+	discard = checkout --
+	delete = !git rm $(git ls-files -d)
+	undelete = checkout --
+
+	unstage = reset HEAD
+	untrack = reset HEAD
+	undo = reset --soft
+	fubar = reset --hard
+
+	amend = commit --amend
+	amend-all = commit -a --amend
+	amend-all-no-edit = commit -a --amend --no-edit
+	amend-no-edit = commit --amend --no-edit
+
+	blame-precise = blame -w -M -CC
+
+	save = stash save
+	load = stash apply
+	pop = stash pop
+	stashes = stash list
+
+	branches = branch --list --all
+	remotes = remote -vv
+
+	pickaxe-string = log -p --all -S
+	pickaxe-s = !git pickaxe-string
+	pickaxe-regex = log -p --all -G
+	pickaxe-r = !git pickaxe-regex
+	pickaxe-g = !git pickaxe-regex
+
+# Diff
+	diff-word = diff --color-words
+
+# Log
+	oneline = log --abbrev-commit --date=short --format=format:'%C(yellow)%h%C(reset) %C(cyan)%ad %C(reset)%s %C(magenta)[%an]%C(reset)'
+	current = log -1
+	last = !git oneline -8
+	latest = !git last
+
+	log-diff = log -u
+	log-graph = log --graph --oneline
+
+# Ignore
+	assume = update-index --assume-unchanged
+	ignore = !git skip
+	skip = update-index --skip-worktree
+
+	unassume = update-index --no-assume-unchanged
+	unignore = !git unskip
+	unskip = update-index --no-skip-worktree
+
+	assume-all = "!git st -s | awk {'print $2'} | xargs git assume"
+	ignore-all = !git skip-all
+	skip-all = !git st -s | awk {'print $2'} | xargs git skip
+
+	unassume-all = "!git list-assumed | xargs git update-index --no-assume-unchanged"
+	unignore-all = !git unskip-all
+	unskip-all = !cd "$(git rev-parse --show-toplevel)" && git ls-files -v | grep '^S' | awk {'print $2'} | xargs git unskip
+
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	ignored = !git skip-list
+	skipped = !git ls-files -v --full-name | grep '^S'
+
+# Recover
+	recover-stage = !"find $(git rev-parse --show-toplevel)/.git/objects/ -type f -printf '%TY-%Tm-%Td %TH:%TM %P\n' | sort -r | sed 's#/##g' | more -10"
+
+# Merge conflicts
+	conflicts = diff --name-only --diff-filter=U
+
+	ours = "!f() { git co --ours $@ && git add $@; }; f"
+	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+
+# Pull requests
+	pr = "!f() { git fetch -fu ${2:-origin} +refs/pull/$1/head:refs/remotes/origin/pull/$1 && git checkout origin/pull/$1; }; f"
+
+	guilt = !git-guilt -w
+	guilt-merge-base = !sh -c 'git guilt $(git merge-base $0 @) @'
+
+# Utils
+	root = rev-parse --show-toplevel
+	find = !git ls-files | grep -i
+	grep-pretty = "!f() { git grep --break --heading $@ $(git rev-list --all); }; f"
+
+	merge-base = merge-base
+
+# Workflow-Utils
+	done = !git fetch origin HEAD && git rebase -i --autosquash origin/HEAD && git rebase origin/HEAD
+
+# Typos
+	comit = commit
+	statis = status
+	ad = add

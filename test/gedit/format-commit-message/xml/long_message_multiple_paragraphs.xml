@@ -1,0 +1,22 @@
+<test>
+<message>
+Lorem ipsum dolor sit amet
+
+Porro prompta no pri, porro pertinax ei mea. Quando conclusionemque mel no. Eam dicta quaeque ne. Cu sea possim delicata, falli oratio oportere mea cu.
+
+Ullum exerci adolescens an vis, quodsi officiis argumentum vim at, mea in quot quaeque oportere. Ei vis liber labore signiferumque, repudiare adolescens nam ad. Mea amet efficiantur ne. Amet deserunt deseruisse sed cu. Nihil recusabo mel et, in sea scaevola periculis. Alii dignissim sit no.
+</message>
+<expected>
+Lorem ipsum dolor sit amet
+
+Porro prompta no pri, porro pertinax ei mea. Quando conclusionemque mel
+no. Eam dicta quaeque ne. Cu sea possim delicata, falli oratio oportere
+mea cu.
+
+Ullum exerci adolescens an vis, quodsi officiis argumentum vim at, mea
+in quot quaeque oportere. Ei vis liber labore signiferumque, repudiare
+adolescens nam ad. Mea amet efficiantur ne. Amet deserunt deseruisse
+sed cu. Nihil recusabo mel et, in sea scaevola periculis. Alii
+dignissim sit no.
+</expected>
+</test>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ GtkSourceView is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ GtkSourceView is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+<language id="git-commit-message" _name="git-commit-message" version="2.0" _section="Other">
+  <metadata>
+    <property name="globs">*COMMIT_EDITMSG</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" _name="Comment"       map-to="def:comment"/>
+    <style id="long"    _name="Line too long" map-to="def:doc-comment-element"/>
+    <style id="squash"  _name="Squash"        map-to="git-rebase:squash"/>
+    <style id="fixup"   _name="Fixup"         map-to="git-rebase:fixup"/>
+    <style id="error"   _name="Error"         map-to="def:error"/>
+  </styles>
+
+  <definitions>
+    <context id="comment" end-at-line-end="true" style-ref="comment">
+      <start>#</start>
+      <end>$</end>
+    </context>
+
+    <context id="long" end-at-line-end="true">
+      <start>^[^#].{72}(.*)</start>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="long"/>
+      </include>
+    </context>
+
+    <context id="error" style-ref="error">
+      <match>^\s+$</match>
+    </context>
+
+    <context id="squash" style-ref="squash">
+      <match>^squash!</match>
+    </context>
+
+    <context id="fixup" style-ref="fixup">
+      <match>^fixup!</match>
+    </context>
+
+    <context id="git-commit-message">
+      <include>
+        <context ref="comment"/>
+        <context ref="error"/>
+        <context ref="fixup"/>
+        <context ref="long"/>
+        <context ref="squash"/>
+      </include>
+    </context>
+  </definitions>
+</language>

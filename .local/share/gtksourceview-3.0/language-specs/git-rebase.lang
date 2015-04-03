@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ GtkSourceView is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ GtkSourceView is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+<language id="git-rebase" _name="git-rebase" version="2.0" _section="Other">
+  <metadata>
+    <property name="globs">*git-rebase-todo</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" _name="Comment" map-to="def:comment"/>
+    <style id="pick"    _name="Pick"/>
+    <style id="squash"  _name="Squash"/>
+    <style id="edit"    _name="Edit"/>
+    <style id="reword"  _name="Reword"/>
+    <style id="fixup"   _name="Fixup"/>
+    <style id="exec"    _name="Exec"/>
+    <style id="hash"    _name="Hash"/>
+  </styles>
+
+  <definitions>
+    <context id="comment" end-at-line-end="true" style-ref="comment">
+      <start>#</start>
+      <end>$</end>
+      <include>
+        <context id="pick-comment" style-ref="pick" extend-parent="false">
+          <match>\s+(p, pick)</match>
+        </context>
+        <context id="reword-comment" style-ref="reword" extend-parent="false">
+          <match>\s+(r, reword)</match>
+        </context>
+        <context id="edit-comment" style-ref="edit" extend-parent="false">
+          <match>\s+(e, edit)</match>
+        </context>
+        <context id="squash-comment" style-ref="squash" extend-parent="false">
+          <match>\s+(s, squash)</match>
+        </context>
+        <context id="fixup-comment" style-ref="fixup" extend-parent="false">
+          <match>\s+(f, fixup)</match>
+        </context>
+        <context id="exec-comment" style-ref="exec" extend-parent="false">
+          <match>\s+(x, exec)</match>
+        </context>
+      </include>
+    </context>
+    
+    <context id="hash" style-ref="hash">
+      <match>[0-9a-f]{7}</match>
+    </context>
+    
+    <context id="pick" style-ref="pick">
+      <match>^(pick|p)\s+</match>
+    </context>
+    <context id="reword" style-ref="reword">
+      <match>^(reword|r)\s+</match>
+    </context>
+    <context id="edit" style-ref="edit">
+      <match>^(edit|e)\s+</match>
+    </context>
+    <context id="squash" style-ref="squash">
+      <match>^(squash|s)\s+</match>
+    </context>
+    <context id="fixup" style-ref="fixup">
+      <match>^(fixup|f)\s+</match>
+    </context>
+    <context id="exec" style-ref="exec">
+      <match>^(exec|e)\s+</match>
+    </context>
+
+    <context id="git-rebase">
+      <include>
+        <context ref="comment"/>
+        <context ref="hash"/>
+        <context ref="reword"/>
+        <context ref="edit"/>
+        <context ref="squash"/>
+        <context ref="fixup"/>
+        <context ref="exec"/>
+        <context ref="pick"/>
+      </include>
+    </context>
+  </definitions>
+</language>

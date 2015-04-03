@@ -1,0 +1,14 @@
+<test>
+<message>
+Lorem ipsum dolor sit amet
+
+Porro prompta no pri, porro pertinax ei mea. Quando conclusionemque mel no. Eam dicta quaeque ne. Cu sea possim delicata, falli oratio oportere mea cu.
+</message>
+<expected>
+Lorem ipsum dolor sit amet
+
+Porro prompta no pri, porro pertinax ei mea. Quando conclusionemque mel
+no. Eam dicta quaeque ne. Cu sea possim delicata, falli oratio oportere
+mea cu.
+</expected>
+</test>

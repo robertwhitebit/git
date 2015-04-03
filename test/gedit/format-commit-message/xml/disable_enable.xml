@@ -1,0 +1,44 @@
+<test>
+<message>
+Lorem ipsum dolor sit amet
+
+Lorem ipsum dolor sit amet, porro prompta no pri, porro pertinax ei mea. Quando conclusionemque mel no.
+
+#d
+Eam dicta quaeque ne. Cu sea possim delicata, falli oratio oportere mea cu. Ullum exerci adolescens an vis
+#e
+
+Ullum exerci adolescens an vis, quodsi officiis argumentum vim at, mea in quot quaeque oportere.
+
+Ei vis liber labore signiferumque, repudiare adolescens nam ad. Mea amet efficiantur ne. Amet deserunt deseruisse sed cu.
+
+#disable
+Nihil recusabo mel et, in sea scaevola periculis. Alii dignissim sit no. Ullum exerci adolescens an vis
+#enable
+
+Has sale doming iracundia ea. Graeco vocent complectitur sea at, quo cu primis putant propriae.
+</message>
+<expected>
+Lorem ipsum dolor sit amet
+
+Lorem ipsum dolor sit amet, porro prompta no pri, porro pertinax ei
+mea. Quando conclusionemque mel no.
+
+#d
+Eam dicta quaeque ne. Cu sea possim delicata, falli oratio oportere mea cu. Ullum exerci adolescens an vis
+#e
+
+Ullum exerci adolescens an vis, quodsi officiis argumentum vim at, mea
+in quot quaeque oportere.
+
+Ei vis liber labore signiferumque, repudiare adolescens nam ad. Mea
+amet efficiantur ne. Amet deserunt deseruisse sed cu.
+
+#disable
+Nihil recusabo mel et, in sea scaevola periculis. Alii dignissim sit no. Ullum exerci adolescens an vis
+#enable
+
+Has sale doming iracundia ea. Graeco vocent complectitur sea at, quo cu
+primis putant propriae.
+</expected>
+</test>

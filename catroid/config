@@ -1,0 +1,14 @@
+[alias]
+	done-physics = !git fetch origin feature/physics && git rebase -i --autosquash origin/feature/physics && git rebase origin/feature/physics
+	discard-settings = !git unignore Catroid.iml .idea/misc.xml catroidSourceTest/catroidSourceTest.iml && git discard Catroid.iml .idea/misc.xml catroidSourceTest/catroidSourceTest.iml
+	load-settings = !git discard-settings && git load -q stash^{/AndroidStudioSettings} && git ignore Catroid.iml .idea/misc.xml catroidSourceTest/catroidSourceTest.iml
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	whitespace = indent-with-non-tab,trailing-space,space-before-tab,tabwidth=4
+[remote "origin"]
+	url = https://github.com/Catrobat/Catroid.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	pushurl = git@github.com:robertwhitebit/Catroid.git

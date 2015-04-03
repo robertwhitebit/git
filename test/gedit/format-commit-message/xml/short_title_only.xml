@@ -1,0 +1,8 @@
+<test>
+<message>
+Lorem ipsum dolor sit amet
+</message>
+<expected>
+Lorem ipsum dolor sit amet
+</expected>
+</test>

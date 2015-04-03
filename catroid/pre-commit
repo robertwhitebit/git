@@ -1,0 +1,21 @@
+#!/bin/bash
+SETTING_REGEXES=(
+	'.*\.idea/.*'
+	'.*\.iml'
+)
+
+ABORT=false
+STAGED_FILES=$(git diff --name-only --staged)
+for SETTING_REGEX in "${SETTING_REGEXES[@]}"; do
+	if [[ "$STAGED_FILES" =~ $SETTING_REGEX ]] ; then
+		if [ "$ABORT" = false ]; then
+			echo 'error: You are trying to commit project settings files'
+		fi
+		echo "$STAGED_FILES" | grep "$SETTING_REGEX"
+		ABORT=true
+	fi
+done
+if [ "$ABORT" = true ]; then
+	echo 'Aborting commit'
+	exit 8
+fi

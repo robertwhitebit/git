@@ -1,0 +1,14 @@
+<test>
+<message>
+Lorem ipsum dolor sit amet
+
+Lorem ipsum https://github.com/robertwhitebit/git/blob/master/.config/gedit/tools/format-commit-message dolor sit amet.
+</message>
+<expected>
+Lorem ipsum dolor sit amet
+
+Lorem ipsum
+https://github.com/robertwhitebit/git/blob/master/.config/gedit/tools/format-commit-message
+dolor sit amet.
+</expected>
+</test>

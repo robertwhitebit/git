@@ -1,0 +1,103 @@
+#!/usr/bin/env python
+# [Gedit Tool]
+# Input=document
+# Output=replace-document
+# Shortcut=<Primary><Alt>l
+# Applicability=all
+# Languages=git-commit-message
+# Save-files=nothing
+# Name=Format commit message
+
+import sys
+import re
+
+content = sys.stdin.read().strip()
+
+def isEmpty(line):
+	return not line
+
+def isComment(line):
+	return line.startswith('#')
+
+def isList(line):
+	if (line.startswith('- ') or line.startswith('* ') or re.match('^[0-9]+\. .+', line)):
+		return line.find(' ')
+	return 0;
+
+def isDisable(line):
+	line = line.rstrip()
+	return line == '#d' or line == '#disable' or line == '# ------------------------ >8 ------------------------'
+
+def isEnable(line):
+	line = line.rstrip()
+	return line == '#e' or line == '#enable'
+
+def splitLine(line):
+	prefix = ''
+	maxLineLength = 72
+	indentation = isList(line)
+	splitted = []
+	while len(line) > maxLineLength:
+		lastSpaceIndex = line.rfind(' ', 0, maxLineLength)
+		firstSpaceIndex = line.find(' ');
+		if lastSpaceIndex == -1:
+			if lastSpaceIndex == firstSpaceIndex:
+				break
+			lastSpaceIndex = firstSpaceIndex
+		splitted.append(prefix + line[:lastSpaceIndex])
+		line = line[lastSpaceIndex + 1:]
+
+		if indentation:
+			maxLineLength = maxLineLength - indentation
+			prefix = ' ' * (indentation + 1)
+			indentation = False
+
+	splitted.append(prefix + line)
+	return splitted
+
+scannedLines = []
+previousLine = ''
+disabled = False
+for line in content.splitlines():
+	if isEnable(line):
+		scannedLines.append(line)
+		disabled = False
+		previousLine = line
+		continue
+	if isDisable(line) or disabled:
+		scannedLines.append(line)
+		disabled = True
+		previousLine = line
+		continue
+
+	line = line.strip()
+	if isEmpty(line) or isEmpty(previousLine) or isComment(line) or isComment(previousLine) or isList(line):
+		scannedLines.append(line)
+	else:
+		scannedLines[-1] = scannedLines[-1] + ' ' + line
+	previousLine = line
+
+splittedLines = []
+previousLine = ''
+disabled = False
+for line in scannedLines:
+	if isEnable(line):
+		splittedLines.append(line)
+		disabled = False
+		previousLine = line
+		continue
+	if isDisable(line) or disabled:
+		splittedLines.append(line)
+		disabled = True
+		previousLine = line
+		continue
+
+	if isEmpty(line) or isComment(line):
+		splittedLines.append(line)
+	else:
+		for splittedLine in splitLine(line):
+			splittedLines.append(splittedLine)
+	previousLine = line
+
+for line in splittedLines:
+	print line
