@@ -22,3 +22,7 @@ function _git_pr() {
 function _git_squash() {
 	_git_checkout
 }
+
+function _git_fu() {
+	_git_reset
+}
