@@ -1,6 +1,9 @@
 [apply]
 	whitespace = fix
 
+[branch]
+	autosetupmerge = true
+
 [core]
 	editor = gedit -w -s
 	pager = less -x1,5
@@ -83,17 +86,24 @@
 	cm = commit -m
 	co = checkout
 	cob = checkout -b
+	cp = cherry-pick
 	cs = commit --squash=@
 	cf = commit --fixup=@
 	di = diff
 	diw = diff --color-words
+	fu = !git fubar
+	fuc = !git fubar-clean
+	ir = rebase -i
 	mg = merge
 	mr = merge
 	ol = !git oneline
 	pl = pull
+	prc = !git pr-check
 	ps = push
 	re = reflog
+	r = rebase
 	rb = rebase
+	ri = rebase -i
 	sa = stash apply
 	sc = !git cs
 	sf = !git cf
@@ -111,6 +121,9 @@
 	untrack = reset HEAD
 	undo = reset --soft
 	fubar = reset --hard
+	fubar-clean = !git reset --hard && git clean -fd
+	
+	force-pull = !git fetch ${1:-origin} $(git rev-parse --abbrev-ref HEAD) && git fu $(git rev-parse --abbrev-ref --symbolic-full-name @{u})
 
 	amend = commit --amend
 	amend-all = commit -a --amend
@@ -124,7 +137,7 @@
 	pop = stash pop
 	stashes = stash list
 
-	branches = branch --list --all
+	branches = branch --list --all -vv
 	remotes = remote -vv
 
 	pickaxe-string = log -p --all -S
@@ -174,9 +187,12 @@
 
 	ours = "!f() { git co --ours $@ && git add $@; }; f"
 	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+	
+	redo-merge = checkout -m
 
 # Pull requests
-	pr = "!f() { git fetch -fu ${2:-origin} +refs/pull/$1/head:refs/remotes/origin/pull/$1 && git checkout origin/pull/$1; }; f"
+	pr = "!f() { git fetch -fu ${2:-origin} +pull/$1/head:remotes/origin/pull/$1 && git checkout pr/$1; }; f"
+	pr-check = "!g() { git pr $1 ${2:-origin} && git reset $(git merge-base HEAD ${2:-origin}/develop); }; g"
 
 	guilt = !git-guilt -w
 	guilt-merge-base = !sh -c 'git guilt $(git merge-base $0 @) @'
@@ -185,13 +201,18 @@
 	root = rev-parse --show-toplevel
 	find = !git ls-files | grep -i
 	grep-pretty = "!f() { git grep --break --heading $@ $(git rev-list --all); }; f"
+	
+	check-for-spaces = -c core.whitespace=indent-with-non-tab,trailing-space,space-before-tab,tabwidth=4 diff --check
+	check-for-tabs = -c core.whitespace=tab-in-indent,trailing-space,space-before-tab,tabwidth=4 diff --check
 
+	ls-files = ls-files
 	merge-base = merge-base
 
 # Workflow-Utils
 	done = !git fetch origin HEAD && git rebase -i --autosquash origin/HEAD && git rebase origin/HEAD
 
 # Typos
-	comit = commit
-	statis = status
 	ad = add
+	comit = commit
+	dff = diff
+	statis = status
